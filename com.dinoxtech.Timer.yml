@@ -26,16 +26,16 @@ modules:
         NPM_CONFIG_LOGLEVEL: info
     build-commands:
       # Copy all electron app files
-      - install -D main.js /app/lib/dinoxtech-timer/main.js
-      - install -D renderer.js /app/lib/dinoxtech-timer/renderer.js
-      - install -D index.html /app/lib/dinoxtech-timer/index.html
-      - install -D styles.css /app/lib/dinoxtech-timer/styles.css
-      - install -D package.json /app/lib/dinoxtech-timer/package.json
-      - install -D package-lock.json /app/lib/dinoxtech-timer/package-lock.json
+      - install -D electron/main.js /app/lib/dinoxtech-timer/main.js
+      - install -D electron/renderer.js /app/lib/dinoxtech-timer/renderer.js
+      - install -D electron/index.html /app/lib/dinoxtech-timer/index.html
+      - install -D electron/styles.css /app/lib/dinoxtech-timer/styles.css
+      - install -D electron/package.json /app/lib/dinoxtech-timer/package.json
+      - install -D electron/package-lock.json /app/lib/dinoxtech-timer/package-lock.json
       
       # Copy assets
       - mkdir -p /app/lib/dinoxtech-timer/assets
-      - install -D assets/icon.svg /app/lib/dinoxtech-timer/assets/icon.svg
+      - install -D electron/assets/icon.svg /app/lib/dinoxtech-timer/assets/icon.svg
       
       # Create launcher script using Electron from BaseApp
       - |
@@ -52,8 +52,10 @@ modules:
       - install -Dm644 com.dinoxtech.Timer.metainfo.xml /app/share/metainfo/com.dinoxtech.Timer.metainfo.xml
       
       # Install icons
-      - install -Dm644 assets/icon.svg /app/share/icons/hicolor/scalable/apps/com.dinoxtech.Timer.svg
+      - install -Dm644 electron/assets/icon.svg /app/share/icons/hicolor/scalable/apps/com.dinoxtech.Timer.svg
       
     sources:
-      - type: dir
-        path: electron
+      - type: git
+        url: https://github.com/dinoxtech/timer.git
+        tag: v1.0.0
+        commit: 39f8db2  # замінити на твій commit hash
