@@ -161,7 +161,7 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 Сучасний та красивий додаток таймера та секундоміра, створений на Electron. Має багато тем, налаштовувані пресети та чистий, інтуїтивний інтерфейс.
 
-![Ліцензія](https://img.shields.io/badge/ліцензія-GPL-3.0-blue.svg)
+![Ліцензія](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 ![Платформа](https://img.shields.io/badge/платформа-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)
 ![Electron](https://img.shields.io/badge/electron-27.0.0-47848F.svg)
 
