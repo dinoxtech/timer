@@ -8,7 +8,7 @@
 
 A modern, beautiful timer and stopwatch application built with Electron. Features multiple themes, customizable presets, and a clean, intuitive interface.
 
-![License](https://img.shields.io/badge/license-GPL-3.0-blue.svg)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)
 ![Electron](https://img.shields.io/badge/electron-27.0.0-47848F.svg)
 
