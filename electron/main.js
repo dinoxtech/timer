@@ -106,15 +106,22 @@ let currentTheme = {
   color2: '#764ba2',
   mode: 'gradient'
 };
+let currentLanguage = 'uk';
 
 function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   
+  // Center the window on screen
+  const windowWidth = 420;
+  const windowHeight = 600;
+  const x = Math.floor((width - windowWidth) / 2);
+  const y = Math.floor((height - windowHeight) / 2);
+  
   mainWindow = new BrowserWindow({
-    width: 420,
-    height: 600,
-    x: width - 440,
-    y: 20,
+    width: windowWidth,
+    height: windowHeight,
+    x: x,
+    y: y,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -195,36 +202,8 @@ function createTray() {
     
     tray = new Tray(trayIcon);
     
-    const contextMenu = Menu.buildFromTemplate([
-      {
-        label: 'Показати таймер',
-        click: () => {
-          if (mainWindow) {
-            mainWindow.show();
-            mainWindow.focus();
-          }
-        }
-      },
-      {
-        label: 'Компактний режим',
-        type: 'checkbox',
-        checked: false,
-        click: (menuItem) => {
-          toggleCompactMode(menuItem.checked);
-        }
-      },
-      { type: 'separator' },
-      {
-        label: 'Вихід',
-        click: () => {
-          app.isQuitting = true;
-          app.quit();
-        }
-      }
-    ]);
-    
+    updateTrayMenu();
     tray.setToolTip('DinoxTech Timer');
-    tray.setContextMenu(contextMenu);
     
     // Track menu open/close events
     tray.on('right-click', () => {
@@ -267,23 +246,109 @@ function toggleCompactMode(compact) {
   const currentY = currentPosition[1];
   
   if (compact) {
-    mainWindow.setSize(400, 80);
-    // Keep the window at the same position
-    mainWindow.setPosition(currentX, currentY);
+    // Use setBounds for precise control over window dimensions
+    mainWindow.setBounds({
+      x: currentX,
+      y: currentY,
+      width: 290,
+      height: 50
+    });
     mainWindow.setResizable(false);
   } else {
-    mainWindow.setSize(420, 600);
-    // Keep the window at the same position
-    mainWindow.setPosition(currentX, currentY);
+    // Use setBounds for precise control over window dimensions
+    mainWindow.setBounds({
+      x: currentX,
+      y: currentY,
+      width: 420,
+      height: 600
+    });
     mainWindow.setResizable(false);
   }
   
-  // Send message to renderer after window resizes
+  // Send message to renderer after window resizes and force size verification
   setTimeout(() => {
     if (mainWindow && mainWindow.webContents) {
+      // Force size verification and correction
+      const currentBounds = mainWindow.getBounds();
+      console.log(`Current window bounds after resize: ${JSON.stringify(currentBounds)}`);
+      
+      if (compact) {
+        // Ensure exact compact size
+        if (currentBounds.width !== 290 || currentBounds.height !== 50) {
+          console.log(`Correcting compact window size from ${currentBounds.width}x${currentBounds.height} to 290x50`);
+          mainWindow.setBounds({
+            x: currentBounds.x,
+            y: currentBounds.y,
+            width: 290,
+            height: 50
+          });
+        }
+      } else {
+        // Ensure exact normal size
+        if (currentBounds.width !== 420 || currentBounds.height !== 600) {
+          console.log(`Correcting normal window size from ${currentBounds.width}x${currentBounds.height} to 420x600`);
+          mainWindow.setBounds({
+            x: currentBounds.x,
+            y: currentBounds.y,
+            width: 420,
+            height: 600
+          });
+        }
+      }
+      
       mainWindow.webContents.send('toggle-compact', compact);
     }
   }, 100);
+}
+
+// Function to update tray menu with current language
+function updateTrayMenu() {
+  if (!tray || tray.isDestroyed()) return;
+  
+  const labels = {
+    uk: {
+      showTimer: 'Показати таймер',
+      compactMode: 'Компактний режим',
+      exit: 'Вихід'
+    },
+    en: {
+      showTimer: 'Show Timer',
+      compactMode: 'Compact Mode',
+      exit: 'Exit'
+    }
+  };
+  
+  const currentLabels = labels[currentLanguage] || labels.uk;
+  
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: currentLabels.showTimer,
+      click: () => {
+        if (mainWindow) {
+          mainWindow.show();
+          mainWindow.focus();
+        }
+      }
+    },
+    {
+      label: currentLabels.compactMode,
+      type: 'checkbox',
+      checked: isCompact,
+      click: (menuItem) => {
+        toggleCompactMode(menuItem.checked);
+      }
+    },
+    { type: 'separator' },
+    {
+      label: currentLabels.exit,
+      click: () => {
+        app.isQuitting = true;
+        app.quit();
+      }
+    }
+  ]);
+  
+  tray.setContextMenu(contextMenu);
 }
 
 // Function to create tray icon (same as app icon but smaller)
@@ -450,45 +515,34 @@ app.on('activate', () => {
 // IPC handlers
 ipcMain.on('toggle-compact', (event, compact) => {
   toggleCompactMode(compact);
-  
-  // Update tray menu - rebuild it to avoid reference errors
-  if (tray && !tray.isDestroyed()) {
-    const contextMenu = Menu.buildFromTemplate([
-      {
-        label: 'Показати таймер',
-        click: () => {
-          if (mainWindow) {
-            mainWindow.show();
-            mainWindow.focus();
-          }
-        }
-      },
-      {
-        label: 'Компактний режим',
-        type: 'checkbox',
-        checked: compact,
-        click: (menuItem) => {
-          toggleCompactMode(menuItem.checked);
-        }
-      },
-      { type: 'separator' },
-      {
-        label: 'Вихід',
-        click: () => {
-          app.isQuitting = true;
-          app.quit();
-        }
-      }
-    ]);
-    tray.setContextMenu(contextMenu);
-  }
+  updateTrayMenu();
 });
 
 ipcMain.on('window-drag', (event, { x, y }) => {
   if (mainWindow && !mainWindow.isDestroyed()) {
     try {
       const currentPosition = mainWindow.getPosition();
-      mainWindow.setPosition(currentPosition[0] + x, currentPosition[1] + y);
+      const newX = currentPosition[0] + x;
+      const newY = currentPosition[1] + y;
+      
+      // Get full screen bounds (not work area)
+      const display = screen.getPrimaryDisplay();
+      const { width: screenWidth, height: screenHeight } = display.bounds;
+      const windowBounds = mainWindow.getBounds();
+      
+      // Allow window to be moved anywhere on screen
+      // Only limit horizontal movement to keep window partially visible
+      const finalX = Math.max(-windowBounds.width + 50, Math.min(newX, screenWidth - 50));
+      // Allow full vertical movement including below taskbar
+      const finalY = Math.max(-windowBounds.height + 20, Math.min(newY, screenHeight - 20));
+      
+      // Use setBounds instead of setPosition to bypass restrictions
+      mainWindow.setBounds({
+        x: finalX,
+        y: finalY,
+        width: windowBounds.width,
+        height: windowBounds.height
+      });
     } catch (error) {
       console.error('Error moving window:', error);
     }
@@ -547,4 +601,10 @@ ipcMain.on('update-theme', (event, themeData) => {
     console.log('Updating tray icon with colors:', themeData.color1, themeData.color2);
     tray.setImage(createTrayIcon(themeData.color1, themeData.color2, themeData.mode));
   }
+});
+
+// Handle language updates
+ipcMain.on('update-language', (event, language) => {
+  currentLanguage = language;
+  updateTrayMenu();
 });

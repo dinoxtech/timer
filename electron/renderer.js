@@ -233,6 +233,9 @@ function init() {
     loadFavorites();
     setupDragRegion();
     
+    // Send initial language to main process for tray menu
+    ipcRenderer.send('update-language', settings.language);
+    
     // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
         Notification.requestPermission();
@@ -298,6 +301,9 @@ function applyLanguage(lang) {
     // Update preset labels based on language
     updatePresetLabels();
     saveSettings();
+    
+    // Notify main process about language change for tray menu
+    ipcRenderer.send('update-language', lang);
 }
 
 function updatePresetLabels() {
@@ -631,29 +637,50 @@ function setupDragRegion() {
     let initialX;
     let initialY;
     
+    // Setup for normal drag region
     const dragRegion = document.querySelector('.drag-region');
+    const compactDragRegion = document.querySelector('.compact-drag-region');
     
-    dragRegion.addEventListener('mousedown', (e) => {
+    // Get the device pixel ratio for proper scaling on HiDPI displays
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    
+    // Function to handle drag start
+    const handleDragStart = (e) => {
         isDragging = true;
-        initialX = e.clientX;
-        initialY = e.clientY;
-    });
+        initialX = e.screenX;  // Use screenX instead of clientX for better accuracy
+        initialY = e.screenY;  // Use screenY instead of clientY for better accuracy
+        e.preventDefault();    // Prevent text selection during drag
+    };
+    
+    // Add event listeners to both drag regions
+    dragRegion.addEventListener('mousedown', handleDragStart);
+    compactDragRegion.addEventListener('mousedown', handleDragStart);
     
     document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
+        e.preventDefault();
         
-        ipcRenderer.send('window-drag', { x: currentX, y: currentY });
+        // Calculate movement delta using screen coordinates
+        currentX = e.screenX - initialX;
+        currentY = e.screenY - initialY;
         
-        initialX = e.clientX;
-        initialY = e.clientY;
+        // Only send drag event if there's actual movement
+        if (currentX !== 0 || currentY !== 0) {
+            ipcRenderer.send('window-drag', { x: currentX, y: currentY });
+        }
+        
+        initialX = e.screenX;
+        initialY = e.screenY;
     });
     
     document.addEventListener('mouseup', () => {
         isDragging = false;
     });
+    
+    // Prevent drag ghost image
+    dragRegion.addEventListener('dragstart', (e) => e.preventDefault());
+    compactDragRegion.addEventListener('dragstart', (e) => e.preventDefault());
 }
 
 // Mode switching
@@ -1005,13 +1032,49 @@ function toggleCompactMode(compact, fromIPC = false) {
         elements.compactView.classList.add('active');
         elements.compactView.style.display = 'flex';
         document.querySelector('.title-bar').style.display = 'none';
-        document.querySelector('.app').style.height = '80px';
+        
+        // Set exact dimensions and prevent overflow
+        const app = document.querySelector('.app');
+        const body = document.body;
+        
+        app.style.height = '50px';
+        app.style.width = '290px';
+        app.style.maxWidth = '290px';
+        app.style.maxHeight = '50px';
+        app.style.overflow = 'hidden';
+        app.classList.add('compact-mode');
+        
+        // Also constrain body to prevent invisible click areas
+        body.style.width = '290px';
+        body.style.height = '50px';
+        body.style.maxWidth = '290px';
+        body.style.maxHeight = '50px';
+        body.style.overflow = 'hidden';
+        body.classList.add('compact-mode');
     } else {
         elements.normalView.style.display = 'flex';
         elements.compactView.classList.remove('active');
         elements.compactView.style.display = 'none';
         document.querySelector('.title-bar').style.display = 'flex';
-        document.querySelector('.app').style.height = '100vh';
+        
+        // Restore normal dimensions
+        const app = document.querySelector('.app');
+        const body = document.body;
+        
+        app.style.height = '100vh';
+        app.style.width = '100%';
+        app.style.maxWidth = '';
+        app.style.maxHeight = '';
+        app.style.overflow = '';
+        app.classList.remove('compact-mode');
+        
+        // Restore body dimensions
+        body.style.width = '';
+        body.style.height = '';
+        body.style.maxWidth = '';
+        body.style.maxHeight = '';
+        body.style.overflow = '';
+        body.classList.remove('compact-mode');
     }
     
     // Update compact controls based on current state
