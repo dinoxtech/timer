@@ -30,16 +30,9 @@ A modern, beautiful timer and stopwatch application built with Electron. Feature
 <summary>View Screenshots</summary>
 
 ![Timer interface with gradient themes](electron/assets/screenshot_en_1.png)
-*Timer interface with gradient themes*
-
 ![Stopwatch with lap tracking](electron/assets/screenshot_en_2.png)
-*Stopwatch with lap tracking*
-
 ![Settings panel with theme selection](electron/assets/screenshot_en_3.png)
-*Settings panel with theme selection*
-
 ![Compact mode for minimal distraction](electron/assets/screenshot_en_4.png)
-*Compact mode for minimal distraction*
 
 </details>
 
@@ -190,16 +183,12 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 <summary>Переглянути знімки</summary>
 
 ![Інтерфейс таймера з градієнтними темами](electron/assets/screenshot_uk_1.png)
-*Інтерфейс таймера з градієнтними темами*
 
 ![Секундомір з відстеженням кіл](electron/assets/screenshot_uk_2.png)
-*Секундомір з відстеженням кіл*
 
 ![Панель налаштувань з вибором теми](electron/assets/screenshot_uk_3.png)
-*Панель налаштувань з вибором теми*
 
 ![Компактний режим для мінімального відволікання](electron/assets/screenshot_uk_4.png)
-*Компактний режим для мінімального відволікання*
 
 </details>
 
