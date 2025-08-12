@@ -8,7 +8,7 @@
 
 A modern, beautiful timer and stopwatch application built with Electron. Features multiple themes, customizable presets, and a clean, intuitive interface.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![License](https://img.shields.io/badge/license-GPL-3.0-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)
 ![Electron](https://img.shields.io/badge/electron-27.0.0-47848F.svg)
 
@@ -141,7 +141,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
 
 ### 🙏 Acknowledgments
 
@@ -161,7 +161,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Сучасний та красивий додаток таймера та секундоміра, створений на Electron. Має багато тем, налаштовувані пресети та чистий, інтуїтивний інтерфейс.
 
-![Ліцензія](https://img.shields.io/badge/ліцензія-MIT-blue.svg)
+![Ліцензія](https://img.shields.io/badge/ліцензія-GPL-3.0-blue.svg)
 ![Платформа](https://img.shields.io/badge/платформа-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)
 ![Electron](https://img.shields.io/badge/electron-27.0.0-47848F.svg)
 
@@ -169,7 +169,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Режим таймера**: Встановлення власних таймерів зворотного відліку з попередніми налаштуваннями
 - **Режим секундоміра**: Відстеження часу з функцією кіл
-- **Багато тем**: 10+ красивих кольорових тем з градієнтами та однотонними кольорами
+- **Багато тем**: 10+ кольорових тем з градієнтами та однотонними кольорами
 - **Власні теми**: Створення власних кольорових комбінацій
 - **Компактний режим**: Мінімальний інтерфейс для зосередженої роботи
 - **Інтеграція з системним треєм**: Швидкий доступ та робота у фоні
@@ -287,14 +287,14 @@ timer/
 Внески вітаються! Будь ласка, не соромтеся надсилати Pull Request.
 
 1. Зробіть форк репозиторію
-2. Створіть гілку функції (`git checkout -b feature/ДивовижнаФункція`)
-3. Закомітьте зміни (`git commit -m 'Додати дивовижну функцію'`)
-4. Запушіть гілку (`git push origin feature/ДивовижнаФункція`)
+2. Створіть гілку функції (`git checkout -b feature/AmazingFeature`)
+3. Закомітьте зміни (`git commit -m 'Додати зміни'`)
+4. Запушіть гілку (`git push origin feature/AmazingFeature`)
 5. Відкрийте Pull Request
 
 ### 📝 Ліцензія
 
-Цей проект ліцензований під ліцензією MIT - дивіться файл [LICENSE](LICENSE) для деталей.
+Цей проект ліцензований під ліцензією GPL-3.0 - дивіться файл [LICENSE](LICENSE) для деталей.
 
 ### 🙏 Подяки
 
