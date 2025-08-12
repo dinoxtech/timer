@@ -1,0 +1,59 @@
+app-id: com.dinoxtech.Timer
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node18
+base: org.electronjs.Electron2.BaseApp
+base-version: '23.08'
+command: dinoxtech-timer
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=dri
+  - --share=network
+
+modules:
+  - name: dinoxtech-timer
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node18/bin
+      env:
+        NPM_CONFIG_LOGLEVEL: info
+    build-commands:
+      # Copy all electron app files
+      - install -D main.js /app/lib/dinoxtech-timer/main.js
+      - install -D renderer.js /app/lib/dinoxtech-timer/renderer.js
+      - install -D index.html /app/lib/dinoxtech-timer/index.html
+      - install -D styles.css /app/lib/dinoxtech-timer/styles.css
+      - install -D package.json /app/lib/dinoxtech-timer/package.json
+      - install -D package-lock.json /app/lib/dinoxtech-timer/package-lock.json
+      
+      # Copy assets
+      - mkdir -p /app/lib/dinoxtech-timer/assets
+      - install -D assets/icon.svg /app/lib/dinoxtech-timer/assets/icon.svg
+      
+      # Create launcher script using Electron from BaseApp
+      - |
+        cat > /app/bin/dinoxtech-timer <<EOF
+        #!/bin/bash
+        exec /app/bin/electron /app/lib/dinoxtech-timer "\$@"
+        EOF
+      - chmod +x /app/bin/dinoxtech-timer
+      
+      # Install desktop file
+      - install -Dm644 com.dinoxtech.Timer.desktop /app/share/applications/com.dinoxtech.Timer.desktop
+      
+      # Install metainfo
+      - install -Dm644 com.dinoxtech.Timer.metainfo.xml /app/share/metainfo/com.dinoxtech.Timer.metainfo.xml
+      
+      # Install icons
+      - install -Dm644 assets/icon.svg /app/share/icons/hicolor/scalable/apps/com.dinoxtech.Timer.svg
+      
+    sources:
+      - type: dir
+        path: electron

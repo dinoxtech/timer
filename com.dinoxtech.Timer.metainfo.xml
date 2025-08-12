@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.dinoxtech.Timer</id>
+  <name>DinoxTech Timer</name>
+  <summary>Modern timer and stopwatch application</summary>
+  <summary xml:lang="uk">Сучасний таймер та секундомір</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  
+  <description>
+    <p>
+      DinoxTech Timer is a beautiful and functional timer and stopwatch application with multiple themes,
+      customizable presets, and notification sounds. Features include both timer and stopwatch modes,
+      lap tracking, custom time presets, and multiple color themes.
+    </p>
+    <p xml:lang="uk">
+      DinoxTech Timer - це красивий та функціональний додаток таймера та секундоміра з кількома темами,
+      налаштовуваними пресетами та звуками сповіщень. Включає режими таймера та секундоміра,
+      відстеження кіл, власні налаштування часу та різні кольорові теми.
+    </p>
+  </description>
+  
+  <categories>
+    <category>Utility</category>
+    <category>Clock</category>
+  </categories>
+  
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main timer interface</caption>
+      <image>https://dinoxtech.com/timer/screenshot1.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <url type="homepage">https://dinoxtech.com</url>
+  <url type="bugtracker">https://github.com/dinoxtech/timer/issues</url>
+  
+  <developer_name>DinoxTech</developer_name>
+  
+  <provides>
+    <binary>dinoxtech-timer</binary>
+  </provides>
+  
+  <releases>
+    <release version="1.0.0" date="2025-01-01">
+      <description>
+        <p>Initial release with timer and stopwatch functionality</p>
+      </description>
+    </release>
+  </releases>
+  
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+</component>

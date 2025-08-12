@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=DinoxTech Timer
+Name[uk]=DinoxTech Таймер
+Comment=Timer and Stopwatch Application
+Comment[uk]=Додаток таймера та секундоміра
+Exec=dinoxtech-timer
+Icon=com.dinoxtech.Timer
+Terminal=false
+Type=Application
+Categories=Utility;Clock;
+Keywords=timer;stopwatch;clock;alarm;countdown;
+Keywords[uk]=таймер;секундомір;годинник;будильник;відлік;
+StartupNotify=true

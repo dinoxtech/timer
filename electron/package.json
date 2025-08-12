@@ -1,0 +1,30 @@
+{
+  "name": "dinoxtech-timer",
+  "version": "1.0.0",
+  "description": "DinoxTech Timer - Modern Timer & Stopwatch Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --linux"
+  },
+  "keywords": ["timer", "stopwatch", "electron", "dinoxtech"],
+  "author": "DinoxTech",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.dinoxtech.Timer",
+    "productName": "DinoxTech Timer",
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility",
+      "icon": "assets/icon.svg"
+    }
+  }
+}
